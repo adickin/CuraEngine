@@ -282,6 +282,22 @@ target_compile_definitions(CuraEngine PRIVATE
         VERSION=\"${CURA_ENGINE_VERSION}\"
 )
 
+#get the srcs for the Unity Bridge
+set(bridge_SRCS 
+        src/UnityDll/CuraBridge.cpp
+        )
+add_library(_UnityCuraBridge SHARED ${bridge_SRCS})
+use_threads(_UnityCuraBridge)
+
+target_include_directories(_UnityCuraBridge
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/UnityDll>
+        )
+
+target_link_libraries(_UnityCuraBridge PRIVATE _CuraEngine)
+target_compile_definitions(_UnityCuraBridge PRIVATE VERSION=\"${CURA_ENGINE_VERSION}\" PUBLIC SAMPLE_EXPORTS)
+target_compile_options(_UnityCuraBridge PRIVATE -fdeclspec)
+
 # Compiling the test environment.
 if (ENABLE_TESTING OR ENABLE_BENCHMARKS)
     set(TESTS_HELPERS_SRC tests/ReadTestPolygons.cpp)

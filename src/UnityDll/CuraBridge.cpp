@@ -1,13 +1,16 @@
 #include "CuraBridge.h"
+
 #include <iostream>
 #include <string>
+
 #include "Application.h"
 using namespace std;
 
-int getRandomNumber() {
+int getRandomNumber()
+{
     cura::Application::getInstance().printHelp();
 
-	return rand();
+    return rand();
 }
 // int sumNumbers(int a, int b) {
 // 	int sum = a + b;
